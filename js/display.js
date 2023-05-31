@@ -15,7 +15,7 @@ class Display {
 
 
     showCurrent(currentNumber) {
-        if (currentNumber === '.' && this.currentValue.textContent.includes('.')) return;
+        if (currentNumber === '.' && this.currentValue.textContent.includes('.') || this.currentValue.textContent.length >14 ) return;
         this.currentValue.textContent += currentNumber;
     }
 
@@ -88,7 +88,7 @@ class Display {
             default:
                 if (!this.currentValue.textContent) return
 
-                if (this.currentValue.textContent && !this.previousValue.textContent) {
+                if (this.currentValue.textContent && !this.previousValue.textContent && option !== 'result') {
                     this.showPrevious(this.currentValue.textContent, option)
                     this.operator = option
                 }
