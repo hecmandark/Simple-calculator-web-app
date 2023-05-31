@@ -61,7 +61,7 @@ class Display {
     }
 
     deleteNumber() {
-        if (this.currentValue.textContent)
+        if (this.currentValue.textContent && !this.currentValue.textContent.includes('='))
             this.currentValue.textContent = this.currentValue.textContent.slice(0, -1);
     }
 

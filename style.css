@@ -17,10 +17,11 @@
 
 .brand h1 {
     font-family: 'Monomaniac One', sans-serif;
+    font-weight: 100;
     font-size: 22px;
     width: 150px;
     text-align: center;
-    color: rgb(30, 93, 169);
+    color: rgb(68, 68, 68);
 }
 
 .brand img {
