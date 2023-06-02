@@ -12,7 +12,7 @@ numberButtons.forEach(button => {
 });
 
 operationButtons.forEach(button => {
-    button.addEventListener('click', () => { display.operationType(button.value) })
+    button.addEventListener('click', () => { display.displayOperation(button.value) })
 })
 
 

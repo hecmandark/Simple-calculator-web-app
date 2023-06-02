@@ -15,12 +15,15 @@ class Display {
 
 
     showCurrent(currentNumber) {
-        if (currentNumber === '.' && this.currentValue.textContent.includes('.') || this.currentValue.textContent.length >14 ) return;
+        if (this.currentValue.textContent.includes('=')) this.currentValue.textContent = null;
+        else if (currentNumber === '.' && this.currentValue.textContent.includes('.') || this.currentValue.textContent.length > 14) return;
         this.currentValue.textContent += currentNumber;
     }
 
     showPrevious(currentNumber, sym) {
-
+        if (currentNumber.toString().includes('=')) {
+            currentNumber = currentNumber.slice(1)
+        }
         this.previousValue.textContent = `${currentNumber} ${this.symbol[sym]}`;
         this.currentValue.textContent = null
     }
@@ -35,21 +38,21 @@ class Display {
         let num1 = parseFloat(this.previousValue.textContent)
         let num2 = parseFloat(this.currentValue.textContent)
         this.accumulated = this.calculate(num1, num2, this.operator)
-        this.previousValue.textContent = this.accumulated
+        this.accumulated
         if (option) {
             this.showPrevious(this.accumulated, option)
             this.operator = option
-            console.log(this.accumulated)
         }
-        return this.accumulated
+        return this.convertExponential(this.accumulated) 
     }
 
     resultDisplay(option) {
         if (this.previousValue.textContent) {
-            let showResult = `= ${this.accumulateValues(option)}`
+            let showResult = `= ${this.convertExponential(this.accumulateValues(option))}`
             this.deleteAll()
-            this.currentValue.textContent = showResult
+            return showResult
         }
+        return this.currentValue.textContent
     }
 
     changeSymbol() {
@@ -71,9 +74,19 @@ class Display {
         this.currentValue.textContent = null
     }
 
+    convertExponential(number) {
+        if (number.toString().length > 15) {
+            number = parseFloat(number)
+            number = number.toExponential(2)
+            return number
+        }
+        return number
+
+    }
+
 
     //method that identifies the type of operation to be executed
-    operationType(option) {
+    displayOperation(option) {
 
         switch (option) {
             case 'zero':
@@ -93,11 +106,13 @@ class Display {
                     this.operator = option
                 }
                 else if (option === 'result') {
-                    this.resultDisplay(null);
+                    this.currentValue.textContent = this.resultDisplay(null);
+
                 }
                 else {
-                    this.accumulateValues(option)
+                    this.previousValue.textContent = this.accumulateValues(option)
                 }
+
 
         }
 
