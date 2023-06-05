@@ -6,6 +6,7 @@ const operationButtons = document.querySelectorAll('.operation')
 
 const display = new Display(currentValue, previousValue);
 
+
 numberButtons.forEach(button => {
     button.addEventListener('click', () => { display.showCurrent(button.textContent) })
 
