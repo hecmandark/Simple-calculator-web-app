@@ -28,16 +28,13 @@ class Display {
         this.currentValue.textContent = null
     }
 
-    calculate(num1, num2, option) {
-        return this.calculator[option](num1, num2)
-
-    }
 
     // method to do several operations without actually pressing result
     accumulateValues(option) {
         let num1 = parseFloat(this.previousValue.textContent)
         let num2 = parseFloat(this.currentValue.textContent)
-        this.accumulated = this.calculate(num1, num2, this.operator)
+        if (!num2) num2 = 0;
+        this.accumulated = this.calculator[this.operator](num1, num2) 
         this.accumulated
         if (option) {
             this.showPrevious(this.accumulated, option)
@@ -77,7 +74,7 @@ class Display {
     convertExponential(number) {
         if (number.toString().length > 15) {
             number = parseFloat(number)
-            number = number.toExponential(2)
+            number = number.toExponential(3)
             return number
         }
         return number
@@ -99,7 +96,7 @@ class Display {
                 return this.changeSymbol();
 
             default:
-                if (!this.currentValue.textContent) return
+                if (!this.currentValue.textContent && !this.previousValue) return
 
                 if (this.currentValue.textContent && !this.previousValue.textContent && option !== 'result') {
                     this.showPrevious(this.currentValue.textContent, option)
@@ -110,11 +107,13 @@ class Display {
 
                 }
                 else {
-                    this.previousValue.textContent = this.accumulateValues(option)
+                    this.previousValue.textContent = `${this.accumulateValues(option)} ${this.symbol[option]}`
                 }
 
 
         }
+
+
 
 
 
