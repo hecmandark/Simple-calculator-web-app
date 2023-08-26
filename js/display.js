@@ -34,13 +34,17 @@ class Display {
         let num1 = parseFloat(this.previousValue.textContent)
         let num2 = parseFloat(this.currentValue.textContent)
         if (!num2) num2 = 0;
-        this.accumulated = this.calculator[this.operator](num1, num2) 
-        this.accumulated
+        this.accumulated = this.calculator[this.operator](num1, num2)
+
+        if (!this.accumulated) {
+            this.accumulated = "ERROR"
+            return this.accumulated;
+        }
         if (option) {
             this.showPrevious(this.accumulated, option)
             this.operator = option
         }
-        return this.convertExponential(this.accumulated) 
+        return this.convertExponential(this.accumulated)
     }
 
     resultDisplay(option) {
